@@ -1,0 +1,99 @@
+
+<div style="margin:40px">
+  <div class="margin25">
+    <label style="font-weight: bold;">Adicionar Novo Serviço de Transporte</label>
+  </div>
+  <div class="display-space-around">
+    <div>
+      <mat-form-field class="width200">
+      <mat-label>Origem</mat-label>
+      <input matInput type="text" value="" [(ngModel)]="servico.origem" [disabled]="isEdit">
+    </mat-form-field>
+  </div>
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Destino </mat-label>
+        <input matInput type="text" value="" [(ngModel)]="servico.destino" [disabled]="isEdit">
+      </mat-form-field>
+    </div>
+    
+    
+  </div>
+  <div class="display-space-around">
+    <div>
+      <mat-form-field  class="width200">
+        <mat-label>Data Saida</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="servico.dataSaida" [matDatepickerFilter]="dateFilter" [disabled]="isEdit"/>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Altura </mat-label>
+        <input matInput type="text" value="" [(ngModel)]="servico.altura" [disabled]="isEdit" (input)="onSearchChange($event)">
+      </mat-form-field>
+    </div>
+  
+    
+  </div>
+  <div class="display-space-around">
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Largura</mat-label>
+        <input matInput type="text" value="" [(ngModel)]="servico.largura" [disabled]="isEdit" (input)="onSearchChange($event)">
+      </mat-form-field>
+    </div>
+    
+  <div>
+    <mat-form-field class="width200">
+      <mat-label>Comprimento</mat-label>
+      <input matInput type="text" value="" [(ngModel)]="servico.comprimento" [disabled]="isEdit" (input)="onSearchChange($event)">
+    </mat-form-field>
+  </div>
+    
+  </div>
+  <div  class="display-space-around">
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Transporte</mat-label>
+        <mat-select [(ngModel)]="transportSelecionado" [disabled]="isEdit" (ngModelChange)="onChange($event)">
+          @for (transporte of transportes; track transporte) {
+            <mat-option [value]="transporte">{{transporte.nome}} - custo: {{transporte.custoPorMetroCubico}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+  <div>
+    <mat-form-field class="width200">
+      <mat-label>Responsável</mat-label>
+      <input matInput type="text" value="" [(ngModel)]="servico.responsavel" [disabled]="isEdit">
+    </mat-form-field>
+  </div>
+    
+  </div>
+  <div class="display-space-around">
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="servico.status" name="status" [disabled]="isNotCompleted">
+            @for (estado of estados; track estado) {
+              <mat-option [value]="estado">{{estado}}</mat-option>
+            }
+          </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="width200">
+        <mat-label>Preço</mat-label>
+        <input matInput type="text" value="" disabled="true" [(ngModel)]="servico.custoTotal">
+      </mat-form-field>
+    </div>
+  
+    
+  </div>
+</div>
+<div>
+  <button mat-flat-button (click)="gravarServico()" [mat-dialog-close]="true" class="center">Gravar</button>
+</div>

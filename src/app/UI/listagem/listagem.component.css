@@ -1,0 +1,14 @@
+.column25 {
+    float: left;
+    width: 25%;
+  }
+
+  .column50 {
+    float: left;
+    width: 50%;
+  }
+
+  .column12 {
+    float: left;
+    width: 15%;
+  }
