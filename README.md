@@ -1,0 +1,1 @@
+# segImob_frontend
