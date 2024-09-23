@@ -13,6 +13,7 @@ export class NotificationsService {
   }
 
   showError(message: string) {
+    console.log('Notifications - Mensagem de erro: ' + message);
     this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 }

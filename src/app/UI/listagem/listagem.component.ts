@@ -61,7 +61,10 @@ export class ListagemComponent {
       next: (data: Servico[]) => {
         this.servicos = this.dataSource.data = data;
       },
-      error: (error) => this.notifications.showError('Erro ao carregar serviços.')
+      error: (error) => 
+        {
+          console.log('Erro GetServicos capturado: ' + error);
+          this.notifications.showError('Erro ao carregar serviços.');}
     });
   }
 

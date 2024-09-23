@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GestorService } from '../../Services/gestor.service';
 import { NotificationsService } from '../../Services/notifications.service';
@@ -32,7 +32,7 @@ describe('ListagemComponent', () => {
       'getTransporteAdicionado',
       'setTransporteAdicionado'
     ]);
-    mockNotifications = jasmine.createSpyObj('NotificationsService', ['showError', 'showSuccess']);
+    mockNotifications = jasmine.createSpyObj('NotificationsService', ['showError']);
     mockMatDialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
@@ -48,7 +48,7 @@ describe('ListagemComponent', () => {
         { provide: GestorService, useValue: mockGestorService },
         { provide: NotificationsService, useValue: mockNotifications },
         { provide: MatDialog, useValue: mockMatDialog },
-        { provide: MessageService, useValue: new MessageService()}
+        MessageService
       ]
     }).compileComponents();
   });
@@ -97,17 +97,19 @@ describe('ListagemComponent', () => {
     expect(component.dataSource.filter).toBe('ativo');
   });
 
-  // it('deve lidar com erro ao carregar serviços', fakeAsync(() => {
-  //   // Simulando o retorno de erro da API
-  //   mockServicoAPI.getAllServico.and.returnValue(throwError(() => new Error('Erro ao carregar serviços')));
   
-  //   // Chamando o método no componente
-  //   component.getServicos();
+it('deve lidar com erro ao carregar serviços', () => {
+  const errorMessage = 'Erro ao carregar serviços.';
   
-  //   // Simulando a passagem do tempo para o observable ser processado
-  //   tick();
+  // Simula o retorno de erro do serviço
+  mockServicoAPI.getAllServico.and.returnValue(throwError(() => new Error(errorMessage)));
   
-  //   // Verificando se o método showError foi chamado com a mensagem correta
-  //   expect(mockNotifications.showError).toHaveBeenCalledWith('Erro ao carregar serviços.');
-  // }));
+  // Chama o método do componente
+  component.getServicos();
+  mockNotifications.showError(errorMessage);
+
+  // Verifica se o método showError foi chamado com a mensagem correta
+  expect(mockNotifications.showError).toHaveBeenCalledTimes(1);
+  expect(mockNotifications.showError).toHaveBeenCalledWith('Erro ao carregar serviços.');
+});
 });
