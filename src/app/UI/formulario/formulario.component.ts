@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,12 +31,12 @@ import { Servico } from '../../Models/Servico';
     MatDialogModule,
     MatButtonModule,
     CommonModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.css']
+  styleUrls: ['./formulario.component.css'],
 })
 export class FormularioComponent implements OnInit {
   transportes: Transport[] = [];
@@ -39,7 +44,7 @@ export class FormularioComponent implements OnInit {
   estados: string[] = ['Ativo', 'Espera Envio', 'Enviado', 'Concluido'];
   isEdit = false;
   isNotCompleted = false;
-  transportSelecionado!:Transport;
+  transportSelecionado!: Transport;
 
   constructor(
     private apiServico: ServicoAPIService,
@@ -67,7 +72,7 @@ export class FormularioComponent implements OnInit {
         this.isEdit = true;
         this.isNotCompleted = this.servico.status === 'Concluido';
       },
-      error: (error) => this.handleError(error)
+      error: (error) => this.handleError(error),
     });
   }
 
@@ -76,7 +81,7 @@ export class FormularioComponent implements OnInit {
       next: (data: Transport[]) => {
         this.transportes = data;
       },
-      error: (error) => this.handleError(error)
+      error: (error) => this.handleError(error),
     });
   }
 
@@ -91,24 +96,24 @@ export class FormularioComponent implements OnInit {
     this.servico.id ? this.alterar() : this.criar();
   }
 
-  onChange(event: any){
+  onChange(event: any) {
     this.servico.transporteId = event.id;
     this.transportSelecionado = event;
     this.calculaPreco();
   }
 
-  onSearchChange(event: any){
+  onSearchChange(event: any) {
     console.log(event);
     console.log(this.servico.altura);
     this.calculaPreco();
   }
 
-  private calculaPreco(){
+  private calculaPreco() {
     let largura = this.servico.largura ?? 0;
     let comprimento = this.servico.comprimento ?? 0;
     let altura = this.servico.altura ?? 0;
     let precoUnidade = this.transportSelecionado?.custoPorMetroCubico ?? 0;
-    
+
     this.servico.custoTotal = largura * comprimento * altura * precoUnidade;
   }
 
@@ -116,9 +121,9 @@ export class FormularioComponent implements OnInit {
     this.apiServico.criarNovoServico(this.servico).subscribe({
       next: () => {
         this.gestor.setServicoAdicionado(true);
-        console.log("Serviço criado com sucesso.");
+        console.log('Serviço criado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.handleError(error)
+      error: (error: HttpErrorResponse) => this.handleError(error),
     });
   }
 
@@ -126,9 +131,9 @@ export class FormularioComponent implements OnInit {
     this.apiServico.alterarServico(this.servico.id, this.servico).subscribe({
       next: () => {
         this.gestor.setServicoAdicionado(true);
-        console.log("Serviço atualizado com sucesso.");
+        console.log('Serviço atualizado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.handleError(error)
+      error: (error: HttpErrorResponse) => this.handleError(error),
     });
   }
 
@@ -136,6 +141,6 @@ export class FormularioComponent implements OnInit {
     const errorMessages = Object.values(error.error.errors).flat().join('\n');
     this.gestor.setServicoAdicionado(false);
     this.gestor.setMessageErro(errorMessages);
-    console.error("Erro:", errorMessages);
+    console.error('Erro:', errorMessages);
   }
 }

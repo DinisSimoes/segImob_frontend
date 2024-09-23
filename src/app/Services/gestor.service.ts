@@ -1,46 +1,45 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GestorService {
-
-  constructor() { }
+  constructor() {}
 
   private idSelecionado!: number;
   private transporteAdicionado!: boolean;
   private servicoAdicionado!: boolean;
   private messageErro!: string;
 
-  getIdSelecionado(){
+  getIdSelecionado() {
     return this.idSelecionado;
   }
 
-  setIdSelecionado(id: number){
+  setIdSelecionado(id: number) {
     this.idSelecionado = id;
   }
 
-  getMessageErro(){
+  getMessageErro() {
     return this.messageErro;
   }
 
-  setMessageErro(erro: string){
+  setMessageErro(erro: string) {
     this.messageErro = erro;
   }
 
-  getTransporteAdicionado(){
+  getTransporteAdicionado() {
     return this.transporteAdicionado;
   }
 
-  setTransporteAdicionado(bool: boolean){
+  setTransporteAdicionado(bool: boolean) {
     this.transporteAdicionado = bool;
   }
 
-  getServicoAdicionado(){
+  getServicoAdicionado() {
     return this.servicoAdicionado;
   }
 
-  setServicoAdicionado(bool: boolean){
+  setServicoAdicionado(bool: boolean) {
     this.servicoAdicionado = bool;
   }
 }

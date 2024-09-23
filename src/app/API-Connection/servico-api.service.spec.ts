@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ServicoAPIService } from './servico-api.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { Servico } from '../Models/Servico';
 
 describe('ServicoAPIService', () => {
@@ -11,7 +14,7 @@ describe('ServicoAPIService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ServicoAPIService]
+      providers: [ServicoAPIService],
     });
 
     service = TestBed.inject(ServicoAPIService);
@@ -23,12 +26,21 @@ describe('ServicoAPIService', () => {
   });
 
   it('deve criar um novo serviço', () => {
-    const mockServico:Servico = {
-      id: 1, origem: 'Criacao', destino: 'Servico', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Criacao',
+      destino: 'Servico',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
 
-    service.criarNovoServico(mockServico).subscribe(response => {
+    service.criarNovoServico(mockServico).subscribe((response) => {
       expect(response).toBe(mockServico);
     });
 
@@ -38,12 +50,21 @@ describe('ServicoAPIService', () => {
   });
 
   it('deve alterar um serviço', () => {
-    const mockServico:Servico = {
-      id: 1, origem: 'Serviço ', destino: 'Atualizado', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Serviço ',
+      destino: 'Atualizado',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
 
-    service.alterarServico(1, mockServico).subscribe(response => {
+    service.alterarServico(1, mockServico).subscribe((response) => {
       expect(response).toBe(mockServico);
     });
 
@@ -55,16 +76,34 @@ describe('ServicoAPIService', () => {
   it('deve retornar todos os serviços', () => {
     const mockServicos = [
       {
-        id: 1, origem: 'Serviço 1', destino: 'teste', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-        status: ''
+        id: 1,
+        origem: 'Serviço 1',
+        destino: 'teste',
+        dataSaida: Date.prototype,
+        altura: 1,
+        largura: 2,
+        comprimento: 3,
+        transporteId: 1,
+        responsavel: 'teste',
+        custoTotal: 0,
+        status: '',
       },
       {
-        id: 2, origem: 'Serviço 2', destino: 'teste', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-        status: ''
-      }
+        id: 2,
+        origem: 'Serviço 2',
+        destino: 'teste',
+        dataSaida: Date.prototype,
+        altura: 1,
+        largura: 2,
+        comprimento: 3,
+        transporteId: 1,
+        responsavel: 'teste',
+        custoTotal: 0,
+        status: '',
+      },
     ];
 
-    service.getAllServico().subscribe(response => {
+    service.getAllServico().subscribe((response) => {
       expect(response.length).toBe(2);
       expect(response).toEqual(mockServicos);
     });
@@ -76,11 +115,20 @@ describe('ServicoAPIService', () => {
 
   it('deve retornar um serviço pelo ID', () => {
     const mockServico = {
-      id: 1, origem: 'Serviço 1', destino: 'teste', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+      id: 1,
+      origem: 'Serviço 1',
+      destino: 'teste',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
 
-    service.getServico(1).subscribe(response => {
+    service.getServico(1).subscribe((response) => {
       expect(response).toEqual(mockServico);
     });
 
@@ -88,5 +136,4 @@ describe('ServicoAPIService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockServico);
   });
-
 });

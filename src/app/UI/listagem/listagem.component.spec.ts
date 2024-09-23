@@ -1,4 +1,7 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
@@ -21,35 +24,39 @@ describe('ListagemComponent', () => {
   let mockMatDialog: jasmine.SpyObj<MatDialog>;
 
   beforeEach(async () => {
-    mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', ['getAllServico']);
-  mockServicoAPI.getAllServico.and.returnValue(of([]));
+    mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', [
+      'getAllServico',
+    ]);
+    mockServicoAPI.getAllServico.and.returnValue(of([]));
     mockGestorService = jasmine.createSpyObj('GestorService', [
-      'setIdSelecionado', 
-      'getServicoAdicionado', 
-      'getMessageErro', 
+      'setIdSelecionado',
+      'getServicoAdicionado',
+      'getMessageErro',
       'setServicoAdicionado',
       'setMessageErro',
       'getTransporteAdicionado',
-      'setTransporteAdicionado'
+      'setTransporteAdicionado',
     ]);
-    mockNotifications = jasmine.createSpyObj('NotificationsService', ['showError']);
+    mockNotifications = jasmine.createSpyObj('NotificationsService', [
+      'showError',
+    ]);
     mockMatDialog = jasmine.createSpyObj('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ListagemComponent, 
+        ListagemComponent,
         ToastModule,
         ListagemComponent,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
       ],
       providers: [
         { provide: ServicoAPIService, useValue: mockServicoAPI },
         { provide: GestorService, useValue: mockGestorService },
         { provide: NotificationsService, useValue: mockNotifications },
         { provide: MatDialog, useValue: mockMatDialog },
-        MessageService
-      ]
+        MessageService,
+      ],
     }).compileComponents();
   });
 
@@ -66,13 +73,31 @@ describe('ListagemComponent', () => {
   it('deve carregar todos os serviços', () => {
     const mockServicos: Servico[] = [
       {
-        id: 1, origem: 'Teste', destino: 'Servico', dataSaida: new Date(), altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-        status: ''
+        id: 1,
+        origem: 'Teste',
+        destino: 'Servico',
+        dataSaida: new Date(),
+        altura: 1,
+        largura: 2,
+        comprimento: 3,
+        transporteId: 1,
+        responsavel: 'teste',
+        custoTotal: 0,
+        status: '',
       },
       {
-        id: 2, origem: 'Teste', destino: 'Servico', dataSaida: new Date(), altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-        status: ''
-      }
+        id: 2,
+        origem: 'Teste',
+        destino: 'Servico',
+        dataSaida: new Date(),
+        altura: 1,
+        largura: 2,
+        comprimento: 3,
+        transporteId: 1,
+        responsavel: 'teste',
+        custoTotal: 0,
+        status: '',
+      },
     ];
     mockServicoAPI.getAllServico.and.returnValue(of(mockServicos));
 
@@ -87,9 +112,18 @@ describe('ListagemComponent', () => {
     const inputEvent = { target: { value: 'ativo' } } as unknown as Event;
     component.dataSource = new MatTableDataSource<Servico>([
       {
-        id: 1, origem: 'Filtro', destino: 'Servico', dataSaida: new Date(), altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-        status: ''
-      }
+        id: 1,
+        origem: 'Filtro',
+        destino: 'Servico',
+        dataSaida: new Date(),
+        altura: 1,
+        largura: 2,
+        comprimento: 3,
+        transporteId: 1,
+        responsavel: 'teste',
+        custoTotal: 0,
+        status: '',
+      },
     ]);
 
     component.applyFilter(inputEvent);
@@ -97,19 +131,18 @@ describe('ListagemComponent', () => {
     expect(component.dataSource.filter).toBe('ativo');
   });
 
-  
-it('deve lidar com erro ao carregar serviços', () => {
-  const errorMessage = 'Erro ao carregar serviços.';
-  
-  // Simula o retorno de erro do serviço
-  mockServicoAPI.getAllServico.and.returnValue(throwError(() => new Error(errorMessage)));
-  
-  // Chama o método do componente
-  component.getServicos();
-  mockNotifications.showError(errorMessage);
+  it('deve lidar com erro ao carregar serviços', () => {
+    const errorMessage = 'Erro ao carregar serviços.';
+    mockServicoAPI.getAllServico.and.returnValue(
+      throwError(() => new Error(errorMessage))
+    );
 
-  // Verifica se o método showError foi chamado com a mensagem correta
-  expect(mockNotifications.showError).toHaveBeenCalledTimes(1);
-  expect(mockNotifications.showError).toHaveBeenCalledWith('Erro ao carregar serviços.');
-});
+    component.getServicos();
+    mockNotifications.showError(errorMessage);
+
+    expect(mockNotifications.showError).toHaveBeenCalledTimes(1);
+    expect(mockNotifications.showError).toHaveBeenCalledWith(
+      'Erro ao carregar serviços.'
+    );
+  });
 });

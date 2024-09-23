@@ -16,28 +16,24 @@ import { TransportAPIService } from '../../API-Connection/transport-api.service'
   selector: 'app-novo-transporte',
   standalone: true,
   imports: [
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatButtonModule, 
-    MatInputModule, 
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatInputModule,
     FormsModule,
-    MatDialogModule, 
-    ToastModule, 
-    ButtonModule, 
-    RippleModule
+    MatDialogModule,
+    ToastModule,
+    ButtonModule,
+    RippleModule,
   ],
   providers: [NotificationsService],
   templateUrl: './novo-transporte.component.html',
-  styleUrl: './novo-transporte.component.css'
+  styleUrl: './novo-transporte.component.css',
 })
 export class NovoTransporteComponent {
-
   transporte!: Transport;
 
-  constructor(
-    private api: TransportAPIService, 
-    private gestor: GestorService
-  ) { 
+  constructor(private api: TransportAPIService, private gestor: GestorService) {
     this.transporte = new Transport();
   }
 
@@ -49,7 +45,7 @@ export class NovoTransporteComponent {
       error: (error) => {
         this.gestor.setTransporteAdicionado(false);
         this.gestor.setMessageErro(error.error.Message);
-      }
+      },
     });
   }
 }

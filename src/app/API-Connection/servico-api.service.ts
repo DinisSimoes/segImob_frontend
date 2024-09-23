@@ -5,9 +5,12 @@ import { Observable } from 'rxjs';
 import { Servico } from '../Models/Servico';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ServicoAPIService extends BaseServiceAPIService implements IServicoServiceAPI {
+export class ServicoAPIService
+  extends BaseServiceAPIService
+  implements IServicoServiceAPI
+{
   private urlServico = 'https://localhost:7068/api/Servico';
 
   criarNovoServico(body: Servico): Observable<any> {

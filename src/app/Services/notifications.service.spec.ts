@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { NotificationsService } from './notifications.service';
-import { MessageService } from 'primeng/api'; 
+import { MessageService } from 'primeng/api';
 
 describe('NotificationsService', () => {
   let service: NotificationsService;
@@ -12,12 +12,14 @@ describe('NotificationsService', () => {
     TestBed.configureTestingModule({
       providers: [
         NotificationsService,
-        { provide: MessageService, useValue: spy }
-      ]
+        { provide: MessageService, useValue: spy },
+      ],
     });
 
     service = TestBed.inject(NotificationsService);
-    messageServiceSpy = TestBed.inject(MessageService) as jasmine.SpyObj<MessageService>;
+    messageServiceSpy = TestBed.inject(
+      MessageService
+    ) as jasmine.SpyObj<MessageService>;
   });
 
   it('should be created', () => {
@@ -30,7 +32,7 @@ describe('NotificationsService', () => {
     expect(messageServiceSpy.add).toHaveBeenCalledWith({
       severity: 'success',
       summary: 'Success',
-      detail: message
+      detail: message,
     });
   });
 
@@ -40,7 +42,7 @@ describe('NotificationsService', () => {
     expect(messageServiceSpy.add).toHaveBeenCalledWith({
       severity: 'error',
       summary: 'Error',
-      detail: message
+      detail: message,
     });
   });
 });

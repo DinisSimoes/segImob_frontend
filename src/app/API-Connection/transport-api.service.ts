@@ -4,9 +4,12 @@ import { Observable } from 'rxjs';
 import { BaseServiceAPIService } from './base-service-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TransportAPIService extends BaseServiceAPIService implements TransportAPIService {
+export class TransportAPIService
+  extends BaseServiceAPIService
+  implements TransportAPIService
+{
   private urlTransport = 'https://localhost:7068/api/Transporte';
 
   criarNovoTransporte(body: Transport): Observable<any> {

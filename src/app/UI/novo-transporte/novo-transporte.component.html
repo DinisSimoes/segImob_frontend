@@ -1,24 +1,32 @@
-<div style="margin:50px">
-  <label style="font-weight: bold;">Adicionar Novo Transporte</label>
-  <div style="margin:10px">
+<div style="margin: 50px">
+  <label style="font-weight: bold">Adicionar Novo Transporte</label>
+  <div style="margin: 10px">
     <div>
       <mat-form-field>
         <mat-label>Nome</mat-label>
-        <input matInput type="text" value="" [(ngModel)]="transporte.nome">
+        <input matInput type="text" value="" [(ngModel)]="transporte.nome" />
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field>
         <mat-label>Preço</mat-label>
-        <input matInput type="number" value="" [(ngModel)]="transporte.custoPorMetroCubico">
+        <input
+          matInput
+          type="number"
+          value=""
+          [(ngModel)]="transporte.custoPorMetroCubico"
+        />
       </mat-form-field>
     </div>
-    
-  
-    
   </div>
-    
 
-      <button mat-flat-button (click)="gravarTransporte()" [mat-dialog-close]="true" class="center">Gravar</button>
+  <button
+    mat-flat-button
+    (click)="gravarTransporte()"
+    [mat-dialog-close]="true"
+    class="center"
+  >
+    Gravar
+  </button>
 </div>

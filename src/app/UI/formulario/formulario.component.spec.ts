@@ -18,21 +18,40 @@ describe('FormularioComponent', () => {
   let mockGestorService: jasmine.SpyObj<GestorService>;
 
   beforeEach(async () => {
-    mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', ['getAllServico']);
-  mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', ['getAllServico', 'getServico', 'criarNovoServico', 'alterarServico']);
-  mockTransportAPI = jasmine.createSpyObj('TransportAPIService', ['getAllTransporte']);
-  mockGestorService = jasmine.createSpyObj('GestorService', ['getIdSelecionado', 'setServicoAdicionado', 'setMessageErro']);
+    mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', [
+      'getAllServico',
+    ]);
+    mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', [
+      'getAllServico',
+      'getServico',
+      'criarNovoServico',
+      'alterarServico',
+    ]);
+    mockTransportAPI = jasmine.createSpyObj('TransportAPIService', [
+      'getAllTransporte',
+    ]);
+    mockGestorService = jasmine.createSpyObj('GestorService', [
+      'getIdSelecionado',
+      'setServicoAdicionado',
+      'setMessageErro',
+    ]);
 
     mockServicoAPI.getAllServico.and.returnValue(of([]));
     mockTransportAPI.getAllTransporte.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormularioComponent, FormsModule, FormularioComponent, NoopAnimationsModule],
+      imports: [
+        HttpClientTestingModule,
+        FormularioComponent,
+        FormsModule,
+        FormularioComponent,
+        NoopAnimationsModule,
+      ],
       providers: [
         { provide: ServicoAPIService, useValue: mockServicoAPI },
         { provide: TransportAPIService, useValue: mockTransportAPI },
-        { provide: GestorService, useValue: mockGestorService }
-      ]
+        { provide: GestorService, useValue: mockGestorService },
+      ],
     }).compileComponents();
   });
 
@@ -46,43 +65,73 @@ describe('FormularioComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('deve carregar o serviço selecionado ao inicializar', () => {
-    const mockServico:Servico = {
-      id: 1, origem: 'Criacao', destino: 'Servico', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Criacao',
+      destino: 'Servico',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
     mockGestorService.getIdSelecionado.and.returnValue(1);
     mockServicoAPI.getServico.and.returnValue(of(mockServico));
-  
+
     component.ngOnInit();
-  
+
     expect(mockGestorService.getIdSelecionado).toHaveBeenCalled();
     expect(mockServicoAPI.getServico).toHaveBeenCalledWith(1);
   });
 
   it('deve carregar os transportes ao inicializar', () => {
-    const mockTransportes: Transport[] = [{
-      id: 1, nome: 'Transporte 1', custoPorMetroCubico: 100
-    }];
-    const mockServico:Servico = {
-      id: 1, origem: 'Criacao', destino: 'Servico', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockTransportes: Transport[] = [
+      {
+        id: 1,
+        nome: 'Transporte 1',
+        custoPorMetroCubico: 100,
+      },
+    ];
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Criacao',
+      destino: 'Servico',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
-    
+
     mockTransportAPI.getAllTransporte.and.returnValue(of(mockTransportes));
     mockServicoAPI.getServico.and.returnValue(of(mockServico));
-  
+
     component.ngOnInit();
-  
+
     expect(mockTransportAPI.getAllTransporte).toHaveBeenCalled();
     expect(component.transportes).toEqual(mockTransportes);
   });
 
   it('deve carregar o serviço selecionado ao inicializar', () => {
-    const mockServico:Servico = {
-      id: 1, origem: 'Criacao', destino: 'Servico', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Criacao',
+      destino: 'Servico',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
     mockGestorService.getIdSelecionado.and.returnValue(1);
     mockServicoAPI.getServico.and.returnValue(of(mockServico));
@@ -96,9 +145,18 @@ describe('FormularioComponent', () => {
   });
 
   it('deve alterar um serviço existente', () => {
-    const mockServico:Servico = {
-      id: 1, origem: 'Atualizacao', destino: 'Servico', dataSaida: Date.prototype, altura: 1, largura: 2, comprimento: 3, transporteId: 1, responsavel: 'teste', custoTotal: 0,
-      status: ''
+    const mockServico: Servico = {
+      id: 1,
+      origem: 'Atualizacao',
+      destino: 'Servico',
+      dataSaida: Date.prototype,
+      altura: 1,
+      largura: 2,
+      comprimento: 3,
+      transporteId: 1,
+      responsavel: 'teste',
+      custoTotal: 0,
+      status: '',
     };
     mockServicoAPI.alterarServico.and.returnValue(of(mockServico));
 
@@ -108,7 +166,6 @@ describe('FormularioComponent', () => {
     expect(mockServicoAPI.alterarServico).toHaveBeenCalledWith(1, mockServico);
     expect(mockGestorService.setServicoAdicionado).toHaveBeenCalledWith(true);
   });
-
 
   it('deve filtrar datas menores que a atual', () => {
     const today = new Date();
@@ -121,5 +178,4 @@ describe('FormularioComponent', () => {
     expect(isTodayValid).toBeTrue();
     expect(isTomorrowValid).toBeTrue();
   });
-
 });

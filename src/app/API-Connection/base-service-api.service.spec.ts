@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BaseServiceAPIService } from './base-service-api.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
 describe('BaseServiceAPIService', () => {
   let service: BaseServiceAPIService;
@@ -10,12 +13,11 @@ describe('BaseServiceAPIService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [BaseServiceAPIService]
+      providers: [BaseServiceAPIService],
     });
 
     service = TestBed.inject(BaseServiceAPIService);
     httpMock = TestBed.inject(HttpTestingController);
-
   });
 
   afterEach(() => {
@@ -25,9 +27,11 @@ describe('BaseServiceAPIService', () => {
   it('deve realizar uma requisição GET', () => {
     const mockData = { id: 1, nome: 'Teste' };
 
-    service.get<any>('https://localhost:7068/api/teste').subscribe(response => {
-      expect(response).toEqual(mockData);
-    });
+    service
+      .get<any>('https://localhost:7068/api/teste')
+      .subscribe((response) => {
+        expect(response).toEqual(mockData);
+      });
 
     const req = httpMock.expectOne('https://localhost:7068/api/teste');
     expect(req.request.method).toBe('GET');
@@ -37,9 +41,11 @@ describe('BaseServiceAPIService', () => {
   it('deve realizar uma requisição POST', () => {
     const mockData = { id: 1, nome: 'Teste' };
 
-    service.post<any>('https://localhost:7068/api/teste', mockData).subscribe(response => {
-      expect(response).toEqual(mockData);
-    });
+    service
+      .post<any>('https://localhost:7068/api/teste', mockData)
+      .subscribe((response) => {
+        expect(response).toEqual(mockData);
+      });
 
     const req = httpMock.expectOne('https://localhost:7068/api/teste');
     expect(req.request.method).toBe('POST');
@@ -49,14 +55,14 @@ describe('BaseServiceAPIService', () => {
   it('deve realizar uma requisição PUT', () => {
     const mockData = { id: 1, nome: 'Teste Atualizado' };
 
-    service.put<any>('https://localhost:7068/api/teste', mockData).subscribe(response => {
-      expect(response).toEqual(mockData);
-    });
+    service
+      .put<any>('https://localhost:7068/api/teste', mockData)
+      .subscribe((response) => {
+        expect(response).toEqual(mockData);
+      });
 
     const req = httpMock.expectOne('https://localhost:7068/api/teste');
     expect(req.request.method).toBe('PUT');
     req.flush(mockData);
   });
 });
-
-

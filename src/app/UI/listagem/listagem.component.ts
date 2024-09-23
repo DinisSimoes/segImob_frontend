@@ -19,24 +19,31 @@ import { Servico } from '../../Models/Servico';
   selector: 'app-listagem',
   standalone: true,
   imports: [
-    MatTableModule, 
-    MatPaginatorModule, 
-    CommonModule, 
-    MatInputModule, 
-    MatButtonModule, 
-    MatInputModule, 
-    MatDialogModule, 
-    ToastModule, 
-    ButtonModule, 
-    RippleModule
+    MatTableModule,
+    MatPaginatorModule,
+    CommonModule,
+    MatInputModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogModule,
+    ToastModule,
+    ButtonModule,
+    RippleModule,
   ],
   providers: [DatePipe, NotificationsService],
   templateUrl: './listagem.component.html',
-  styleUrl: './listagem.component.css'
+  styleUrl: './listagem.component.css',
 })
 export class ListagemComponent {
   servicos!: Servico[];
-  displayedColumns: string[] = ['btnEdit', 'status', 'responsavel', 'dataSaida', 'origem', 'destino'];
+  displayedColumns: string[] = [
+    'btnEdit',
+    'status',
+    'responsavel',
+    'dataSaida',
+    'origem',
+    'destino',
+  ];
   dataSource = new MatTableDataSource<Servico>(this.servicos);
   readonly dialog = inject(MatDialog);
 
@@ -44,10 +51,10 @@ export class ListagemComponent {
   paginator!: MatPaginator;
 
   constructor(
-    private api: ServicoAPIService, 
-    private gestor:GestorService, 
+    private api: ServicoAPIService,
+    private gestor: GestorService,
     private notifications: NotificationsService
-  ){
+  ) {
     this.gestor.setIdSelecionado(0);
     this.getServicos();
   }
@@ -61,17 +68,17 @@ export class ListagemComponent {
       next: (data: Servico[]) => {
         this.servicos = this.dataSource.data = data;
       },
-      error: (error) => 
-        {
-          console.log('Erro GetServicos capturado: ' + error);
-          this.notifications.showError('Erro ao carregar serviços.');}
+      error: (error) => {
+        console.log('Erro GetServicos capturado: ' + error);
+        this.notifications.showError('Erro ao carregar serviços.');
+      },
     });
   }
 
   editar(id: number) {
     this.gestor.setIdSelecionado(id);
     const dialogRef = this.dialog.open(FormularioComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (this.gestor.getServicoAdicionado()) {
         this.notifications.showSuccess('Serviço atualizado');
         this.gestor.setServicoAdicionado(false);
@@ -90,7 +97,7 @@ export class ListagemComponent {
 
   adicionarTransporte() {
     const dialogRef = this.dialog.open(NovoTransporteComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (this.gestor.getTransporteAdicionado()) {
         this.notifications.showSuccess('Novo Transporte adicionado');
         this.gestor.setTransporteAdicionado(false);
@@ -103,8 +110,8 @@ export class ListagemComponent {
 
   adicionarServico() {
     this.gestor.setIdSelecionado(0);
-    const dialogRef = this.dialog.open(FormularioComponent,{width: '90vw'});
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(FormularioComponent, { width: '90vw' });
+    dialogRef.afterClosed().subscribe((result) => {
       if (this.gestor.getServicoAdicionado()) {
         this.notifications.showSuccess('Novo Serviço adicionado');
         this.gestor.setServicoAdicionado(false);

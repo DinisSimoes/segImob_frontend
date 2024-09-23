@@ -6,9 +6,9 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';  
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  
-import { ListagemComponent } from './UI/listagem/listagem.component';  
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListagemComponent } from './UI/listagem/listagem.component';
 
 describe('AppComponent', () => {
   let fixture: any;
@@ -17,17 +17,17 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AppComponent,  
-        ListagemComponent,  
+        AppComponent,
+        ListagemComponent,
         RouterOutlet,
         ToastModule,
         ButtonModule,
         RippleModule,
-        HttpClientModule,  
-        BrowserAnimationsModule  
+        HttpClientModule,
+        BrowserAnimationsModule,
       ],
       providers: [MessageService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]  
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 
