@@ -57,7 +57,7 @@
           value=""
           [(ngModel)]="servico.altura"
           [disabled]="isEdit"
-          (input)="onSearchChange($event)"
+          (input)="onChangeMedidas()"
         />
       </mat-form-field>
     </div>
@@ -72,7 +72,7 @@
           value=""
           [(ngModel)]="servico.largura"
           [disabled]="isEdit"
-          (input)="onSearchChange($event)"
+          (input)="onChangeMedidas()"
         />
       </mat-form-field>
     </div>
@@ -86,7 +86,7 @@
           value=""
           [(ngModel)]="servico.comprimento"
           [disabled]="isEdit"
-          (input)="onSearchChange($event)"
+          (input)="onChangeMedidas()"
         />
       </mat-form-field>
     </div>
@@ -98,7 +98,7 @@
         <mat-select
           [(ngModel)]="transportSelecionado"
           [disabled]="isEdit"
-          (ngModelChange)="onChange($event)"
+          (ngModelChange)="onChangeTransporte($event)"
         >
           @for (transporte of transportes; track transporte) {
           <mat-option [value]="transporte"

@@ -22,11 +22,11 @@ describe('NotificationsService', () => {
     ) as jasmine.SpyObj<MessageService>;
   });
 
-  it('should be created', () => {
+  it('deve ser criado', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call messageService.add with success message', () => {
+  it('deve chamar messageService.add com mensagem de sucesso', () => {
     const message = 'Success message';
     service.showSuccess(message);
     expect(messageServiceSpy.add).toHaveBeenCalledWith({
@@ -36,7 +36,7 @@ describe('NotificationsService', () => {
     });
   });
 
-  it('should call messageService.add with error message', () => {
+  it('deve chamar messageService.add com mensagem de erro', () => {
     const message = 'Error message';
     service.showError(message);
     expect(messageServiceSpy.add).toHaveBeenCalledWith({

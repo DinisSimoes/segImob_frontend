@@ -10,7 +10,31 @@ describe('GestorService', () => {
     service = TestBed.inject(GestorService);
   });
 
-  it('should be created', () => {
+  it('deve ser criado', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('teste set and get idSelecionado', () => {
+    service.setIdSelecionado(5);
+    expect(service.getIdSelecionado()).toBe(5);
+  });
+
+  it('teste set and get messageErro', () => {
+    service.setMessageErro('Error occurred');
+    expect(service.getMessageErro()).toBe('Error occurred');
+  });
+
+  it('teste set and get transporteAdicionado', () => {
+    service.setTransporteAdicionado(true);
+    expect(service.getTransporteAdicionado()).toBe(true);
+    service.setTransporteAdicionado(false);
+    expect(service.getTransporteAdicionado()).toBe(false);
+  });
+
+  it('teste set and get servicoAdicionado', () => {
+    service.setServicoAdicionado(true);
+    expect(service.getServicoAdicionado()).toBe(true);
+    service.setServicoAdicionado(false);
+    expect(service.getServicoAdicionado()).toBe(false);
   });
 });

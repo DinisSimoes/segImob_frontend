@@ -45,7 +45,6 @@ export class ListagemComponent {
     'destino',
   ];
   dataSource = new MatTableDataSource<Servico>(this.servicos);
-  readonly dialog = inject(MatDialog);
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -53,7 +52,8 @@ export class ListagemComponent {
   constructor(
     private api: ServicoAPIService,
     private gestor: GestorService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private dialog: MatDialog
   ) {
     this.gestor.setIdSelecionado(0);
     this.getServicos();

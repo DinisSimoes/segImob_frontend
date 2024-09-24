@@ -65,7 +65,7 @@ export class FormularioComponent implements OnInit {
     this.loadTransportes();
   }
 
-  private loadServico(id: number) {
+  public loadServico(id: number) {
     this.apiServico.getServico(id).subscribe({
       next: (data: Servico) => {
         this.servico = data;
@@ -76,7 +76,7 @@ export class FormularioComponent implements OnInit {
     });
   }
 
-  private loadTransportes() {
+  public loadTransportes() {
     this.apiTransporte.getAllTransporte().subscribe({
       next: (data: Transport[]) => {
         this.transportes = data;
@@ -96,19 +96,17 @@ export class FormularioComponent implements OnInit {
     this.servico.id ? this.alterar() : this.criar();
   }
 
-  onChange(event: any) {
+  onChangeTransporte(event: any) {
     this.servico.transporteId = event.id;
     this.transportSelecionado = event;
     this.calculaPreco();
   }
 
-  onSearchChange(event: any) {
-    console.log(event);
-    console.log(this.servico.altura);
+  onChangeMedidas() {
     this.calculaPreco();
   }
 
-  private calculaPreco() {
+  public calculaPreco() {
     let largura = this.servico.largura ?? 0;
     let comprimento = this.servico.comprimento ?? 0;
     let altura = this.servico.altura ?? 0;
@@ -117,7 +115,7 @@ export class FormularioComponent implements OnInit {
     this.servico.custoTotal = largura * comprimento * altura * precoUnidade;
   }
 
-  private criar() {
+  public criar() {
     this.apiServico.criarNovoServico(this.servico).subscribe({
       next: () => {
         this.gestor.setServicoAdicionado(true);
@@ -127,7 +125,7 @@ export class FormularioComponent implements OnInit {
     });
   }
 
-  private alterar() {
+  public alterar() {
     this.apiServico.alterarServico(this.servico.id, this.servico).subscribe({
       next: () => {
         this.gestor.setServicoAdicionado(true);
@@ -137,7 +135,7 @@ export class FormularioComponent implements OnInit {
     });
   }
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
     const errorMessages = Object.values(error.error.errors).flat().join('\n');
     this.gestor.setServicoAdicionado(false);
     this.gestor.setMessageErro(errorMessages);

@@ -36,15 +36,15 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
+  it('deve ser criado', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'segimob-transportadora'`, () => {
+  it(`deve ter o titulo 'segimob-transportadora'`, () => {
     expect(component.title).toEqual('segimob-transportadora');
   });
 
-  it('should inject MessageService', () => {
+  it('deve injetar MessageService', () => {
     const messageService = TestBed.inject(MessageService);
     expect(messageService).toBeTruthy();
   });

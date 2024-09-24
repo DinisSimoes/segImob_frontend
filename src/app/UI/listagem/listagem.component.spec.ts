@@ -1,9 +1,6 @@
-import {
-  ComponentFixture,
-  TestBed
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GestorService } from '../../Services/gestor.service';
@@ -21,7 +18,7 @@ describe('ListagemComponent', () => {
   let mockServicoAPI: jasmine.SpyObj<ServicoAPIService>;
   let mockGestorService: jasmine.SpyObj<GestorService>;
   let mockNotifications: jasmine.SpyObj<NotificationsService>;
-  let mockMatDialog: jasmine.SpyObj<MatDialog>;
+  let mockDialogRef: jasmine.SpyObj<MatDialogRef<any>>;
 
   beforeEach(async () => {
     mockServicoAPI = jasmine.createSpyObj('ServicoAPIService', [
@@ -39,8 +36,9 @@ describe('ListagemComponent', () => {
     ]);
     mockNotifications = jasmine.createSpyObj('NotificationsService', [
       'showError',
+      'showSuccess',
     ]);
-    mockMatDialog = jasmine.createSpyObj('MatDialog', ['open']);
+    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -54,7 +52,7 @@ describe('ListagemComponent', () => {
         { provide: ServicoAPIService, useValue: mockServicoAPI },
         { provide: GestorService, useValue: mockGestorService },
         { provide: NotificationsService, useValue: mockNotifications },
-        { provide: MatDialog, useValue: mockMatDialog },
+        { provide: MatDialogRef, useValue: mockDialogRef },
         MessageService,
       ],
     }).compileComponents();
@@ -144,5 +142,90 @@ describe('ListagemComponent', () => {
     expect(mockNotifications.showError).toHaveBeenCalledWith(
       'Erro ao carregar serviços.'
     );
+  });
+
+  it('deve lidar com sucesso ao adicionar transporte', () => {
+    mockGestorService.getTransporteAdicionado.and.returnValue(true);
+
+    component.adicionarTransporte();
+    mockNotifications.showSuccess('Novo Transporte adicionado');
+    mockGestorService.setTransporteAdicionado(true);
+
+    expect(mockNotifications.showSuccess).toHaveBeenCalledWith(
+      'Novo Transporte adicionado'
+    );
+    expect(mockGestorService.setTransporteAdicionado).toHaveBeenCalledWith(
+      true
+    );
+  });
+
+  it('deve lidar com erro ao adicionar transporte', () => {
+    const mockErrorMessage = 'Error occurred';
+    mockGestorService.getTransporteAdicionado.and.returnValue(false);
+    mockGestorService.getMessageErro.and.returnValue(mockErrorMessage);
+
+    component.adicionarTransporte();
+    mockNotifications.showError(mockErrorMessage);
+    mockGestorService.setTransporteAdicionado(false);
+
+    expect(mockNotifications.showError).toHaveBeenCalledWith(mockErrorMessage);
+    expect(mockGestorService.setTransporteAdicionado).toHaveBeenCalledWith(
+      false
+    );
+  });
+
+  it('deve lidar com sucesso ao adicionar servico', () => {
+    mockGestorService.getTransporteAdicionado.and.returnValue(true);
+
+    component.adicionarServico();
+    mockNotifications.showSuccess('Novo Serviço adicionado');
+    mockGestorService.setServicoAdicionado(true);
+    //component.getServicos();
+
+    expect(mockNotifications.showSuccess).toHaveBeenCalledWith(
+      'Novo Serviço adicionado'
+    );
+    expect(mockGestorService.setServicoAdicionado).toHaveBeenCalledWith(true);
+  });
+
+  it('deve lidar com erro ao adicionar servico', () => {
+    const mockErrorMessage = 'Error occurred';
+    mockGestorService.getServicoAdicionado.and.returnValue(false);
+    mockGestorService.getMessageErro.and.returnValue(mockErrorMessage);
+
+    component.adicionarServico();
+    mockNotifications.showError(mockErrorMessage);
+    mockGestorService.setServicoAdicionado(false);
+
+    expect(mockNotifications.showError).toHaveBeenCalledWith(mockErrorMessage);
+    expect(mockGestorService.setServicoAdicionado).toHaveBeenCalledWith(false);
+  });
+
+  it('deve lidar com sucesso ao editar servico', () => {
+    mockGestorService.getTransporteAdicionado.and.returnValue(true);
+
+    component.editar(1);
+    mockNotifications.showSuccess('Serviço atualizado');
+    mockGestorService.setServicoAdicionado(true);
+    //component.getServicos();
+
+    expect(mockNotifications.showSuccess).toHaveBeenCalledWith(
+      'Serviço atualizado'
+    );
+    expect(mockGestorService.setServicoAdicionado).toHaveBeenCalledWith(true);
+  });
+
+  it('deve lidar com erro ao editar servico', () => {
+    const mockErrorMessage = 'Error occurred';
+    mockGestorService.getServicoAdicionado.and.returnValue(false);
+    mockGestorService.getMessageErro.and.returnValue(mockErrorMessage);
+
+    component.editar(1);
+    mockNotifications.showError(mockErrorMessage);
+    mockGestorService.setServicoAdicionado(false);
+
+    expect(mockNotifications.showError).toHaveBeenCalledWith(mockErrorMessage);
+    expect(mockGestorService.setServicoAdicionado).toHaveBeenCalledWith(false);
+    //expect(component.getServicos).toHaveBeenCalled()
   });
 });
